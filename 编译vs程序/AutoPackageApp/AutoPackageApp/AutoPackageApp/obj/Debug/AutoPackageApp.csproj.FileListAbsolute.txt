@@ -1,0 +1,5 @@
+G:\pythonTools\编译vs程序\AutoPackageApp\AutoPackageApp\AutoPackageApp\bin\Debug\AutoPackageApp.exe
+G:\pythonTools\编译vs程序\AutoPackageApp\AutoPackageApp\AutoPackageApp\bin\Debug\AutoPackageApp.pdb
+G:\pythonTools\编译vs程序\AutoPackageApp\AutoPackageApp\AutoPackageApp\obj\Debug\AutoPackageApp.exe
+G:\pythonTools\编译vs程序\AutoPackageApp\AutoPackageApp\AutoPackageApp\obj\Debug\AutoPackageApp.pdb
+G:\pythonTools\编译vs程序\AutoPackageApp\AutoPackageApp\AutoPackageApp\obj\Debug\AutoPackageApp.csprojResolveAssemblyReference.cache
