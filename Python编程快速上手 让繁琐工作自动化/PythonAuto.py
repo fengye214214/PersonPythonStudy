@@ -1,6 +1,7 @@
 import sys
 import random
-import copy  
+import copy
+import pprint
 
 class MyPythonAuto:
     
@@ -150,12 +151,99 @@ class MyPythonAuto:
                 birthyDays[name] = body
                 print('Birthday database updated.')
                 print(birthyDays)
+
+    def test512(self):
+        spam = {'color' : 'red', 'age' : 42}
+        for v in spam.values():
+            print(v)
+        for k in spam.keys():
+            print(k)
+        for i in spam.items():
+            print(i)
+        print(list(spam.keys()))
+        for k, v in spam.items():
+            print('Key: ' + k + ' Value: ' + str(v))
+        picnicItems = {'apples' : 5, 'cup' : 2}
+        print(' I am bringing ' + str(picnicItems.get('cup', 0)) + 'cups.')
+
+    def test515(self):
+        spam = {'name': 'Pooka', 'age': 5}
+        print(spam)
+        spam.setdefault('color', 'black')
+        print(spam)
+
+    def characterCount(self):
+        message = 'It was '
+        count = {}
+        for ch in message:
+            count.setdefault(ch, 0)
+            count[ch] = count[ch] + 1
+
+        pprint.pprint(count)
+        print(pprint.pformat(count))
+
+    def printBoard(self, board):
+        print(board['top-L'] + '|' + board['top-M'] + '|' + board['top-R'])
+        print('-+-+-')
+        print(board['mid-L'] + '|' + board['mid-M'] + '|' + board['mid-R'])
+        print('-+-+-')
+        print(board['low-L'] + '|' + board['low-M'] + '|' + board['low-R'])
+        
+
+    def ticTacToe(self):
+        theBoard = {'top-L': ' ', 'top-M': ' ', 'top-R': ' ',
+                    'mid-L': ' ', 'mid-M': ' ', 'mid-R': ' ',
+                    'low-L': ' ', 'low-M': ' ', 'low-R': ' '}
+        turn = 'X'
+        for i in range(9):
+            self.printBoard(theBoard)
+            print('Turn for ' + turn + '.Move on which space?')
+            move = input()
+            theBoard[move] = turn
+            if turn == 'X':
+                turn = 'O'
+            else:
+                turn = 'X'
+        print(theBoard)
+
+    def test532(self):
+        allGuests = {'Alice': {'appkes': 5, 'pretzels': 12},
+                    'Bob': {'ham sandwiches': 3, 'apples': 2},
+                    'Carol': {'cups': 3, 'apple pies': 1}}
+        numBrought = 0
+        for k, v in allGuests.items():
+            numBrought = numBrought + v.get('appkes', 0)
+            print(numBrought)
+
+    def test612(self):
+        spam = "That is Alice's cat"
+        spam1 = r'Say hi to Bob\'s mpther'
+        spam2 = '''Dear Alice,
+                Eve's cat has been arr
+                Sincerely,
+                Bob'''
+        """
+        注释
+        """
+        print(spam2)
+    
+    def test622(self):
+        while True:
+            print('Enter you age:')
+            age = input()
+            if age.isdecimal():
+                break
+            print('Please enter a number for your age.')
+
+    def printPicnic(self, itemsDict, leftWidth, rightWidth):
+        print('Hello'.center(leftWidth + rightWidth, '='))
+
         
         
 
 if __name__ == '__main__':
     my = MyPythonAuto()
-    my.test511()
+    my.printPicnic('', 5, 5)
     
     '''
     def testPrintEggs():
