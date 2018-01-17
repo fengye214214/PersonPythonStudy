@@ -2,6 +2,7 @@ import sys
 import random
 import copy
 import pprint
+import re
 
 class MyPythonAuto:
     
@@ -237,13 +238,56 @@ class MyPythonAuto:
 
     def printPicnic(self, itemsDict, leftWidth, rightWidth):
         print('Hello'.center(leftWidth + rightWidth, '='))
+        names = input()
 
+    def testRe(self):
+        phoneNumRegex = re.compile(r'\d{3}-\d{3}-\d{4}') #r表示原始字符，比如里面有\n,则\n就不表示转义字符，如果不加r\\表示转移字符
+        mo = phoneNumRegex.search('My Number is 415-555-4242.My Number is 999-999-9999.')
+        print('Phone number found: ' + mo.group())
+
+    def testReGroup(self):
+        phoneNumRegex = re.compile(r'(\d{3})-(\d{3}-\d{3})')
+        mo = phoneNumRegex.search('My Number is 415-555-4242.is 999-999-9999.')
+        print('Phone number found:' + mo.group(0))
+        print('Phone number found:' + mo.group(1))
+        print('Phone number found:' + mo.group(2))
+        print('Phone number found:' + mo.group())
+
+    def testGeGroups(self):
+        phoneNumRegex = re.compile(r'(\d{3})-(\d{3}-\d{3})')
+        mo = phoneNumRegex.search('My Number is 415-555-4242.is 999-999-9999.')
+        test1, test2 = mo.groups()
+        print(test1)
+        print(test2)
+        print(mo.groups())
+
+    #管道匹配
+    def testRePip(self):
+        phoneNumRegex = re.compile(r'Tom|Tim'); #与关系，只要有一个匹配就自动匹配
+        mo = phoneNumRegex.search('My name os T1om, and when is Tim')
+        print(mo.group())
         
+    #管道匹配多个分组
+    def testReBat(self):
+        phoneNumber = re.compile(r'Bat(man|mobile|as)')
+        mo = phoneNumber.search('My name is  Batmobile Batas')
+        print(mo.group())
+        pn = re.compile(r'AA(11|22|33)')
+        mo = pn.search('my name is  AA33')
+        print(mo.group())
+
+    #用问号实现可选匹配
+    def testReIsSelect(self):
+        pn = re.compile(r'An(wo)?man')
+        mo = pn.search('The Adventures of Anman')
+        print(mo.group())
+        mo1 = pn.search('I am a Anwoman')
+        print(mo1.group())
         
 
 if __name__ == '__main__':
     my = MyPythonAuto()
-    my.printPicnic('', 5, 5)
+    my.testReIsSelect()
     
     '''
     def testPrintEggs():
