@@ -283,11 +283,21 @@ class MyPythonAuto:
         print(mo.group())
         mo1 = pn.search('I am a Anwoman')
         print(mo1.group())
+        #no1 = pn.search('I am a A Anwowowoman')
+        #print(no1.group())
+
+    #用星号匹配零次或多次
+    def testReStart(self):
+        pn = re.compile(r'Cd(wo)*man')
+        mo = pn.search('The test Cdman')
+        print(mo.group())
+        no1 =pn.search('The test Cdwowowoman')
+        print(no1.group())
         
 
 if __name__ == '__main__':
     my = MyPythonAuto()
-    my.testReIsSelect()
+    my.testReStart()
     
     '''
     def testPrintEggs():
