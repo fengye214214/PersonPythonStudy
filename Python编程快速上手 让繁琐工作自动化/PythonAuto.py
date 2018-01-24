@@ -3,6 +3,9 @@ import random
 import copy
 import pprint
 import re
+import os
+import shelve
+import myCats
 
 class MyPythonAuto:
     
@@ -293,11 +296,203 @@ class MyPythonAuto:
         print(mo.group())
         no1 =pn.search('The test Cdwowowoman')
         print(no1.group())
+
+    #用加好匹配一次或多次
+    def testRePlus(self):
+        pn = re.compile(r'ac(as)+man')
+        mo = pn.search('The acasman')
+        print(mo.group())
+        mo1 = pn.search('The acasasman acasman')
+        print(mo1.group())
+    
+    #用花括号匹配特定次数
+    def testReHua(self):
+        pn = re.compile(r'(ha){2}')
+        no = pn.search('The haha')
+        print(no.group())
+
+    #7.4贪心和非贪心匹配
+    def testReHeart(self):
+        pn = re.compile(r'(Ha){3,5}')
+        mo = pn.search('HaHaHaHaHaHa')
+        print(mo.group())
+        pn1 = re.compile(r'(Ha){3,5}?')
+        mo1 = pn1.search('HaHaHaHaHaHa')
+        print(mo1.group())
+
+    #7.5findAll
+    def testFindAll(self):
+        phoneNumber = re.compile(r'\d\d\d-\d\d\d\d-\d\d\d\d')
+        mo = phoneNumber.search('phone1: 000-1111-2222. phone2: 222-8888-8888')
+        print(mo.group())
+        mo1 = phoneNumber.findall('phone1: 000-1111-2222. phone2: 222-8888-8888')
+        print(mo1)
+
+    #7.6字符分类
+    #   \d 0到9的任何数字
+    #   \s 空格、制表符或换行符（可以认为是匹配“空白”字符）
+    #   \w任何字母、数字或下划线字符（可以认为是匹配“单词”字符）
+    def testString(self):
+        pn = re.compile(r'[0-5]')
+        mo = pn.findall('123456789')
+        print(mo)
+        pn1 = re.compile(r'\d+\s\w+')
+        mo1 = pn1.findall('12 drummers, 11 pipers, 10 lords, 9 ladies, 8 maids,' + \
+                          ' 7 swans, 6 geese, 5 rings, 4 birds, 3 hens, 2 doves, 1 partridge')
+        print(mo1)
+
+    #7.7建立自己的字符串分类
+    def testMyString(self):
+        voRegex = re.compile(r'[aeiouAEIOU]')
+        pn = voRegex.findall('ma ne bi vo cu mA nE bI bO bU')
+        print(pn)
+        pn = re.compile(r'[a-zA-Z0-9]')
+        mo = pn.findall('3435gfdf+|_')
+        print(mo)
+        pn1 = re.compile(r'[0-5\.]')
+        mo1 =pn1.findall('123456789ADX.')
+        print(mo1)
+        voRe1 = re.compile(r'[^aeiouAEIOU]')
+        pn2 = voRe1.findall('ma ne bi vo cu mA nE bI bO bU')
+        print(pn2)
+    
+    #7.8插入字符和美元
+    def testStringAndDo(self):
+        vo = re.compile(r'^Hello') #字符串必须以Hello开头
+        pn = vo.search('Hello World!')
+        print(pn.group())
+        vo1 = re.compile(r'\d$')
+        pn1 = vo1.search('Hello World! 323')
+        print(pn1.group())
+        vo2 = re.compile(r'^Hello\d$')
+        pn2 = vo2.search('Hello3')
+        print(pn2)
+        vo3 = re.compile(r'^\d+$')
+        pn3 = vo3.search('323232A32')
+        print(pn3)
+
+    #7.9通配字符
+    def testAllString(self):
+        no = re.compile(r'.at')
+        res = no.findall('Iamat a am a ats at1 at2')
+        print(res)
+
+    #7.9.1用点星匹配所有字符
+    #.(句点)匹配除了换行符以外的所有字符
+    def testStartAllString(self):
+        no = re.compile(r'First Name: (.*) Last Name: (.*)')
+        res = no.search('First Name: AA Last Name: VV')
+        print(res.group())
+        no1 = re.compile(r'<.*?>')
+        res1 = no1.search('<To serve man> for dinner.>')
+        print(res1.group())
+        no2 = re.compile(r'<.*>')
+        res2 = no2.search('<To serve man> for dinner.>')
+        print(res2.group())
+
+    #7.9.2用句点字符匹配换行符
+    def test792(self):
+        no = re.compile('.*')
+        res = no.search('Serve the public trust.\nProtect the innocent.\nUphold the law.')
+        print(res.group())
+        print('*************************')
+        no1 = re.compile('.*', re.DOTALL)
+        res1 = no1.search('Serve the public trust.\nProtect the innocent.\nUphold the law.')
+        print(res1.group())
+
+    #7.11不分大小写的匹配
+    def testAllWord(self):
+        no = re.compile('robocop',re.I)
+        res =no.search('RoboCop is part man, part machine, all cop.')
+        print(res.group())
+        res1 = no.search('ROBOCOP is part man, part machine, all cop.')
+        print(res1.group())
+
+    #7.12用sub()方法替换字符串
+    def testSub(self):
+        no = re.compile(r'Agent \w+')
+        res = no.sub('CENSORED','Agent Alice gave the secret documents to Agent Bob.')
+        print(res)
+    
+    def testSubEx(self):
+        no = re.compile(r'Agent (\w)\w*')
+        res = no.findall('Agent Alice told Agent Carol that Agent Eve knew Agent Bob was a double agent.')
+        print(res)
+        print('*********')
+        res1 = no.sub(r'\1****','Agent Alice told Agent Carol that Agent Eve knew Agent Bob was a double agent.')
+        print(res1)
+
+    #7.13管理复杂的正则表达式
+    def testComplexRe(self):
+        pn = re.compile(r'''
+            (\d{3}|\(\d{3}\))?             #area code
+            (\s|-|\.)?                     #separator
+            \d{3}                          #first 3 digits
+            \d{4}                          #last 4 digits
+            (\s*(ext|x|ext.)\s*\d{2,5})?   #extension
+            ''')
+        on1 = re.compile('fool', re.IGNORECASE | re.DOTALL)
+        on2 = re.compile('foo', re.IGNORECASE | re.DOTALL | re.VERBOSE)
+        te = re.compile(r'[a-z]{2,4}')
+        mo = te.findall('asdfghj')
+        print(mo)
+        print(mo[0])
+        print(mo[1])
+
+    #8.1文件及路径
+    def testOSPath(self):
+        myFiles = ['account.txt', 'details.csv', 'test.docx']
+        for fileName in myFiles:
+            print(os.path.join('C:\\Users\\fengye', fileName))
+        print(os.getcwd())
+        os.chdir('C:\\')
+        print(os.getcwd())
+        os.makedirs('C:\\delicious\\walnut\\waffles')
+
+    #8.2读取文件
+    def testReadFile(self):
+        helloFile = open('C:\\test.txt')
+        helloContent = helloFile.read()
+        print(helloContent)
         
+    #8.3文件写入
+    def testWriteFile(self):
+        helloFile1 = open('C:\\test1.txt','w') #a
+        helloFile1.write('Hello world!2\n')
+        helloFile1.close()
+
+    #8.3用shelve模块保存变量
+    def testShelveFile(self):
+        shelfFile = shelve.open('mydata')
+        cats = ['Zophie', 'Pooka', 'Simon']
+        shelfFile['cats'] = cats
+        shelfFile.close()
+
+    def testShelveRead(self):
+        sf = shelve.open('mydata')
+        type(sf)
+        print(sf['cats'])
+        sf.close()
+
+    #8.4用pprint.pformat()函数保存变量
+    def testpprintformat(self):
+        cats = [{'name': 'Zophie', 'desc': 'chubby'}, {'name': 'Pooka', 'desc': 'fluffy'}]
+        re = pprint.pformat(cats)
+        print(re)
+        fileObj = open('myCats.py', 'w')
+        fileObj.write('cat = ' + pprint.pformat(cats) + '\n')
+        fileObj.close()
+
+    def testMyCats(self):
+        no = myCats.cat
+        print(no)
+        m = ['a']
+        n = ['b']
+        print(m  + n)
 
 if __name__ == '__main__':
     my = MyPythonAuto()
-    my.testReStart()
+    my.testMyCats()
     
     '''
     def testPrintEggs():
