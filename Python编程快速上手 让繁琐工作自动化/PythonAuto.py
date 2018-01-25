@@ -6,6 +6,10 @@ import re
 import os
 import shelve
 import myCats
+import zipfile
+import requests
+import bs4
+
 
 class MyPythonAuto:
     
@@ -490,9 +494,96 @@ class MyPythonAuto:
         n = ['b']
         print(m  + n)
 
+    #9.1 shutil.copy
+    #    shutil.cpoytree
+    #    shutil.move
+    #    shutil.unlike
+    #    shutil.rmdir
+    #    shutil.rmtree
+
+    #9.2遍历目录书
+    def testListTree(self):
+        for folderName, subfolders, filenames in os.walk('G:\\Windows 10 x64'):
+            print('当前目录文件夹是%s' % (folderName))
+
+            for subFolder in subfolders:
+                print('SUBFOLDER OF ' + folderName + ': ' + subFolder)
+            for fileName in filenames:
+                print('FILE INSIDE ' + folderName + ': '+ fileName)
+
+            print('')
+
+    #9.3测试ZIP文件
+    def testZIP(self):
+        os.chdir('C:\\')
+        exampleZip = zipfile.ZipFile('example.zip')
+        re = exampleZip.namelist()
+        print(re)
+        re1 = exampleZip.getinfo('testCo.txt')
+        print(re1.file_size)
+        print(re1.compress_size)
+        exampleZip.close()
+
+    #9.3.2从ZIP中解压文件
+    def testUnZIP(self):
+        os.chdir('C:\\')
+        exampleZip = zipfile.ZipFile('example.zip')
+        exampleZip.extractall()
+        exampleZip.close()
+
+    #9.3.3创建和添加到ZIP
+    def testAZIP(self):
+        newZIP = zipfile.ZipFile('new.zip', 'w')
+        newZIP.write('PythonAuto.py', compress_type = zipfile.ZIP_DEFLATED)
+        newZIP.close()
+
+    #10.1异常测试
+    def testException(self):
+        print('ok')
+        raise Exception('异常测试...')
+        print('ok1')
+
+    def testAssert(self):
+        podBayDoorStatus = 'open'
+        assert podBayDoorStatus == 'open', 'The pod bay doors need to be "open".'
+        
+    def testPrint(self):
+        print('ok')
+
+    11.4
+    def testRequest(self):
+        res = requests.get('https://www.baidu.com/')
+        try:
+            res.raise_for_status()
+        except Exception as exc:
+            print('异常：%s' % (exc))
+        print(type(res))
+        print(res.status_code == requests.codes.ok)
+        print(len(res.text))
+        #print(res.text)
+        playFile = open('RomeoAndJuliet.txt', 'wb')
+        for chunk in res.iter_content(10000):
+            playFile.write(chunk)
+        playFile.close()
+
+    def testHTML(self):
+        res = requests.get('http://www.dytt8.net/')
+        res.raise_for_status()
+        #resStr = res.content.decode('gbk', 'ignore')
+        #print(resStr)
+        print(res.text.encode('utf-8', 'ignore').decode('gbk', 'ignore'))
+        noStarchSoup = bs4.BeautifulSoup(resStr, 'html.parser')
+        #type(noStarchSoup)
+        elems = noStarchSoup.select('#co_content8')
+        #type(elems)
+        #print(len(elems))
+        #print(elems[0])
+        
+        
+        
 if __name__ == '__main__':
     my = MyPythonAuto()
-    my.testMyCats()
+    my.testHTML()
     
     '''
     def testPrintEggs():
