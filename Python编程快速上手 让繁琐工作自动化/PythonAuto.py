@@ -9,6 +9,10 @@ import myCats
 import zipfile
 import requests
 import bs4
+import webbrowser
+import openpyxl
+
+
 
 
 class MyPythonAuto:
@@ -18,8 +22,7 @@ class MyPythonAuto:
 
     def test(self):
         strLen = len('hello world!')
-        #strLen = str(29)
-        strBool = True
+        #strLen = str(29)strBool = True
         print(strLen)
 
     def inputName(self):
@@ -567,23 +570,72 @@ class MyPythonAuto:
         playFile.close()
 
     def testHTML(self):
-        res = requests.get('http://www.dytt8.net/')
+        res = requests.get('https://www.baidu.com/')
         res.raise_for_status()
-        #resStr = res.content.decode('gbk', 'ignore')
-        #print(resStr)
-        print(res.text.encode('utf-8', 'ignore').decode('gbk', 'ignore'))
+        #print(res.content.decode('utf-8'))
+        resStr = res.content.decode('utf-8')
         noStarchSoup = bs4.BeautifulSoup(resStr, 'html.parser')
-        #type(noStarchSoup)
-        elems = noStarchSoup.select('#co_content8')
-        #type(elems)
-        #print(len(elems))
-        #print(elems[0])
-        
-        
-        
+        type(noStarchSoup)
+        elems = noStarchSoup.select('p')  ##cp
+        type(elems)
+        print(len(elems))
+        print(elems[0])
+        print(elems[0].getText()) #elems[0].attr
+
+    #通过元素获取属性
+    def testHTML2(self):
+        soup = bs4.BeautifulSoup(open('testHtml.html'),'html.parser')
+        spanElem = soup.select('p')
+        print(spanElem[0].attrs)
+
+    def webBrowerOpen(self):
+        webbrowser.open('https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=0&rsv_idx=1&tn=baidu&wd=博客园&rsv_pq=f266b3b500002b01&rsv_t=3c66DrXGvZ%2FXxclN8O6gLWcx97KPXTVF0x3pOpucOuuto8RxlhRna4DyCNc&rqlang=cn&rsv_enter=1&rsv_sug3=7&rsv_sug1=6&rsv_sug7=100&rsv_sug2=0&inputT=8161&rsv_sug4=8162')
+
+    #12.3.1用openpyxl打开Excel
+    def testOpxl(self):
+        wb = openpyxl.load_workbook('example.xlsx')
+        print(type(wb))
+    
+    #12.3.2从工作簿中获取工作表
+    def testGetSheet(self):
+        wb = openpyxl.load_workbook('example.xlsx')
+        sh = wb.sheetnames
+        print('工作表名称列表: ' + str(sh))
+        sh = wb['Sheet3']
+        print(sh)
+        anotherSh = wb.active
+        print(anotherSh)
+
+    #12.3.3从表中取得单元格
+    def getDataBySheet(self):
+        wb = openpyxl.load_workbook('example.xlsx')
+        sheet = wb['Sheet1']
+        res = sheet['A1'].value
+        print(res)
+        res1 = sheet['B1']
+        print(res1.value)
+        print('Row %s, Column %s is %s' % (str(res1.column), res1.column, res1.value))
+        print('Cell %s is %s' % (res1.coordinate, res1.value))
+        print(sheet.cell(row =1, column = 2).value)
+        for i in range(1, 8, 2): #2为序列的步长
+            print(i, sheet.cell(row = i, column = 2).value)
+        #print('表格大小%s, %s' % (sheet.get_highest_row(), sheet.get_highest_column()))
+
+    #12.3.5 从表中获取行和列
+    def getColAndRowFromSheet(self):
+        wb = openpyxl.load_workbook('example.xlsx')
+        sheet = wb['Sheet1']
+        res = tuple(sheet['A1' : 'C3'])
+        print(pprint.pformat(res))
+        print('\n')
+        for rowOfCellObjects in sheet['A1' : "C3"]:
+            for cellObj in rowOfCellObjects:
+                print(cellObj.coordinate, cellObj.value)
+            print('---END OF ROW---')
+
 if __name__ == '__main__':
     my = MyPythonAuto()
-    my.testHTML()
+    my.getColAndRowFromSheet()
     
     '''
     def testPrintEggs():
