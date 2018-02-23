@@ -11,7 +11,10 @@ import requests
 import bs4
 import webbrowser
 import openpyxl
-
+import PyPDF2
+import csv
+import time 
+import datetime
 
 
 
@@ -632,10 +635,111 @@ class MyPythonAuto:
             for cellObj in rowOfCellObjects:
                 print(cellObj.coordinate, cellObj.value)
             print('---END OF ROW---')
+    
+    #测试图表
+    def testExcelChart(self):
+        wb = openpyxl.Workbook()
+        sheet = wb.active
+        for i in range(1, 11): #在列A上创建数据
+            sheet['A' + str(i)] = i
+        
+        refObj = openpyxl.chart.Reference(sheet, 1, 1, 1, 10)
+        seriesObj = openpyxl.chart.Series(refObj, title='First series')
+        
+        chartObj = openpyxl.chart.BarChart()
+        chartObj.append(seriesObj)
+        chartObj.height = 200
+        chartObj.width = 300
+        wb.save('sampleChart.xlsx')
 
+    #13.1.1
+    def testPDF(self):
+        pdfFileObj = open('调度台接口手册V2.6.pdf', 'rb')
+        pdfReader = PyPDF2.PdfFileReader(pdfFileObj)
+        print(pdfReader.numPages)
+        pageObj = pdfReader.getPage(87)
+        print('ds' + pageObj.extractText())
+
+    #14.1.1
+    def testCSV(self):
+        exampleFile = open('example.csv')
+        exampleReader = csv.reader(exampleFile)
+        exampleData = list(exampleReader)
+        print(exampleData)
+        print(exampleData[0][1])
+
+    #14.1.2
+    def testCSV(self):
+        exampleFile = open('example.csv')
+        exampleReader = csv.reader(exampleFile)
+        for row in exampleReader:
+            print('Row # %s %s' % (str(exampleReader.line_num), str(row)))
+
+    #14.1.3
+    def testWriterCSV(self):
+        outputFile = open('output.csv', 'w', newline='')
+        outputWriter = csv.writer(outputFile)
+        outputWriter.writerow(['spam', 'eggs', 'bacon', 'ham'])
+        outputWriter.writerow(['hello, world!', 'egges', 'bacon', 'ham'])
+
+    #15.1.1
+    def testTime(self):
+        print(time.time())
+        time.sleep(5)
+        print('ok')
+
+    def superClick(self):
+        print('按下ENTER开始。然后，按下Enter停止。按下Ctrl-C退出')
+        input() #按下ENTER开始
+        print('开始')
+        startTime = time.time() #获取第一圈的时间
+        lastTime = startTime
+        lapNum = 1
+        try:
+            while True:
+                input()
+                lapTime = round(time.time() - lastTime, 2)
+                totalTime = round(time.time() - startTime, 2)
+                print('Lap #%s: %s (%s)' % (lapNum, totalTime, lapTime), end='')
+                lapNum += 1
+                lastTime = time.time() #rest the last time
+        except KeyboardInterrupt:
+            #处理Ctrl-C异常
+            print('\nDone.')
+
+    #15.4
+    def testDatetime(self):
+        dt = datetime.datetime.now()
+        print(dt)
+        print(dt.year)
+        print(dt.month)
+        print(dt.second)
+        print(dt.hour)
+        print(dt.minute)
+        print(dt.second)
+
+    def testDatetime1(self):
+        ti = time.time()
+        print(ti)
+        dt = datetime.datetime.fromtimestamp(ti)
+        print(dt)
+
+    def testDatetime2(self):
+        dt = datetime.datetime.now()
+        print(dt)
+        thDays = datetime.timedelta(days = 10)
+        print(dt + thDays)
+
+    def testPrint(self):
+        for i in range(50):
+            print(str(i))
+            time.sleep(1)
+        print('ok')
+
+#https://github.com/brandonprry/gray_hat_csharp_code      
 if __name__ == '__main__':
     my = MyPythonAuto()
-    my.getColAndRowFromSheet()
+    my.testPrint()
     
     '''
     def testPrintEggs():

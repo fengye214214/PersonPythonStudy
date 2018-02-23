@@ -50,7 +50,7 @@
             "request": "launch",
             "stopOnEntry": true,
             "pythonPath": "C:\\Program Files\\Python36\\python.exe",
-            "program": "${workspaceRoot}/readCensusExcel.py",
+            "program": "${workspaceRoot}/PythonAuto.py",
             "cwd": "",
             "console": "externalTerminal",
             "env": {},
