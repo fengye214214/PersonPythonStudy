@@ -208,6 +208,7 @@ class pythonCore:
 
     #1.3.14 扩展符号
     def testExtendSymbol(self):
+        pass
         
         
 
