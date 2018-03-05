@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComplierSolution", "ComplierSolution\ComplierSolution.csproj", "{2D94FF58-9CDC-41B0-A972-C44273220A0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AClassLibrary", "AClassLibrary\AClassLibrary.csproj", "{ACA8AF35-2F0A-4EC0-9364-8DCD0FC5AD54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BClassLibrary", "BClassLibrary\BClassLibrary.csproj", "{DDF82632-CD72-4476-B908-16E64F202569}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2D94FF58-9CDC-41B0-A972-C44273220A0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D94FF58-9CDC-41B0-A972-C44273220A0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D94FF58-9CDC-41B0-A972-C44273220A0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D94FF58-9CDC-41B0-A972-C44273220A0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACA8AF35-2F0A-4EC0-9364-8DCD0FC5AD54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACA8AF35-2F0A-4EC0-9364-8DCD0FC5AD54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACA8AF35-2F0A-4EC0-9364-8DCD0FC5AD54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACA8AF35-2F0A-4EC0-9364-8DCD0FC5AD54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDF82632-CD72-4476-B908-16E64F202569}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDF82632-CD72-4476-B908-16E64F202569}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDF82632-CD72-4476-B908-16E64F202569}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDF82632-CD72-4476-B908-16E64F202569}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
