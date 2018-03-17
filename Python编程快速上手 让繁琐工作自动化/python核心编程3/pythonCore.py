@@ -3,6 +3,9 @@
 
 import re
 import os
+from sys import maxsize
+import time
+from random import randrange, choice
 
 class pythonCore:
 
@@ -264,9 +267,19 @@ class pythonCore:
         with open('ta.txt', 'r') as f:
             for eachLine in f:
                 print(re.split(r'\s\s+|t', eachLine.strip()))
+    
+    def gendata(self):
+        tlds = ('com', 'edu', 'net', 'org', 'gov')
+        for i in range(randrange(5, 11)):
+            dtint = randrange(maxsize) #获取日期
+            print(dtint)
+            dtstr = time.strftime(str(dtint))       #日期字符串
+            print(dtstr)
+            llen = randrange(4, 8)     #login is shorter
+            print(llen)
 
         
-#启动函数           
+#启动函数          
 if __name__ == '__main__':
     pc = pythonCore()
-    pc.reWho()
+    pc.gendata()
