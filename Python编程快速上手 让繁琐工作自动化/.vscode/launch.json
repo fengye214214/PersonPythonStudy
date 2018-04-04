@@ -50,7 +50,7 @@
             "request": "launch",
             "stopOnEntry": true,
             "pythonPath": "C:\\Program Files\\Python36\\python.exe",
-            "program": "${workspaceRoot}/python核心编程3/pythonCore.py",
+            "program": "${workspaceRoot}/python极客项目编程/解析iTunes播放列表/playlist.py",
             "cwd": "",
             "console": "externalTerminal",
             "env": {},
